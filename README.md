@@ -10,9 +10,10 @@ Once the template is installed and assigned to the hosts, Zabbix will start moni
 - HTTP port open: Verifies if the HTTP port (usually port 80) is open.
 - RTSP port open: Checks if the specified RTSP port is open. By default, the template uses the macro `{$HIKVISION.PORT.RTSP}` to define the port number.
 - Hikvision server port open: Verifies if the specified Hikvision server port is open. By default, the template uses the macro `{$HIKVISION.PORT.SERVER}` to define the port number.
+- Hikvision items from Zabbix official template
 
-If any of the monitored ports are closed or the device is not responding to ping, Zabbix will trigger an alert.
+You should modify the macro `{$USER}` and `{$PASSWORD}` for the official Zabbix template.
 
 ## Compatibility
 
-This template is designed for Zabbix Server 5.x or later.
+This template is designed for Zabbix Server 6.0 or later.

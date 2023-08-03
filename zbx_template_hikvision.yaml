@@ -1,0 +1,65 @@
+zabbix_export:
+  version: '6.0'
+  date: '2023-08-03T17:25:21Z'
+  groups:
+    - uuid: 7469980417f94b6ab8fff1220430e638
+      name: Templates/Futur-Tech/Security
+  templates:
+    - uuid: cbaa7a7f2e244f278fb98e264a94afc6
+      template: 'Futur-Tech Hikvision'
+      name: 'Futur-Tech Hikvision'
+      description: 'https://github.com/Futur-Tech/futur-tech-zabbix-hikvision'
+      templates:
+        - name: 'Hikvision camera by HTTP'
+        - name: 'HTTP Service'
+        - name: 'ICMP Ping'
+      groups:
+        - name: Templates/Futur-Tech/Security
+      items:
+        - uuid: eb3344b623cd4a70978f768ca7582837
+          name: 'RTSP service is running'
+          type: SIMPLE
+          key: 'net.tcp.service[tcp,,{$HIKVISION.PORT.RTSP}]'
+          valuemap:
+            name: 'Service state'
+          tags:
+            - tag: Application
+              value: Status
+          triggers:
+            - uuid: 343a9fb2fcdb4eb6a5046f11b46daf67
+              expression: 'max(/Futur-Tech Hikvision/net.tcp.service[tcp,,{$HIKVISION.PORT.RTSP}],3s)=0'
+              name: 'RTSP service is down'
+              opdata: 'RTSP port {$HIKVISION.PORT.RTSP}'
+              url: 'http://{HOST.CONN}'
+              priority: AVERAGE
+        - uuid: 2cc00a564b724406a501e5c90e3ed392
+          name: 'Hikvision service is running'
+          type: SIMPLE
+          key: 'net.tcp.service[tcp,,{$HIKVISION.PORT.SERVER}]'
+          valuemap:
+            name: 'Service state'
+          tags:
+            - tag: Application
+              value: Status
+          triggers:
+            - uuid: 603732b7858e44c6850a9be9985d5c61
+              expression: 'max(/Futur-Tech Hikvision/net.tcp.service[tcp,,{$HIKVISION.PORT.SERVER}],3s)=0'
+              name: 'Hikvision service is down'
+              opdata: 'Hikvision port {$HIKVISION.PORT.SERVER}'
+              url: 'http://{HOST.CONN}'
+              priority: AVERAGE
+      tags:
+        - tag: Futur-Tech
+      macros:
+        - macro: '{$HIKVISION.PORT.RTSP}'
+          value: '554'
+        - macro: '{$HIKVISION.PORT.SERVER}'
+          value: '8000'
+      valuemaps:
+        - uuid: 62883581a38e4126a19316d54cc11267
+          name: 'Service state'
+          mappings:
+            - value: '0'
+              newvalue: Down
+            - value: '1'
+              newvalue: Up
