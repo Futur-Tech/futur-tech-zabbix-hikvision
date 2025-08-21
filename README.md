@@ -12,7 +12,7 @@ Once the template is installed and assigned to the hosts, Zabbix will start moni
 - Hikvision server port open: Verifies if the specified Hikvision server port is open. By default, the template uses the macro `{$HIKVISION.PORT.SERVER}` to define the port number.
 - Hikvision items from Zabbix official template
 
-You should modify the macro `{$USER}` and `{$PASSWORD}` for the official Zabbix template.
+You should modify the macro `{$HIKVISION_ISAPI_HOST}`, `{$USER}` and `{$PASSWORD}` for the official Zabbix template.
 
 ## Compatibility
 
